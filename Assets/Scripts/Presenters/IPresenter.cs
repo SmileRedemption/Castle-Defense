@@ -1,0 +1,11 @@
+using Model;
+
+namespace Presenters
+{
+    public interface IPresenter
+    {
+        void Enable();
+        void Disable();
+        void OnModelDied();
+    }
+}
