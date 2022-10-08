@@ -1,3 +1,4 @@
+using System;
 using Model;
 using Presenters;
 using UnityEngine;
@@ -10,16 +11,21 @@ namespace Setup
         [SerializeField] private Root _root;
         [SerializeField] private HealthBar _healthBar;
         
-        private Health _healthWizard;
+        private Health _healthCastle;
         private HealthPresenter _healthPresenter;
-        
+
+        private void Awake()
+        {
+            _root.Init();
+        }
+
         private void OnEnable()
         {
             Model = _root.Castle;
             Presenter = new CastlePresenter(Model, View);
             
-            _healthWizard = _root.Wizard.GetHealth();
-            _healthPresenter = new HealthPresenter(_healthBar, _healthWizard);
+            _healthCastle = Model.GetHealth();
+            _healthPresenter = new HealthPresenter(_healthBar, _healthCastle);
 
             Presenter.Enable();
             _healthPresenter.Enable();

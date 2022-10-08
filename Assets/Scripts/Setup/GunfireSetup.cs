@@ -1,6 +1,7 @@
 using System;
 using Model;
 using Presenters;
+using UnityEngine;
 using Views;
 
 namespace Setup
@@ -9,8 +10,7 @@ namespace Setup
     {
         public void Init(EnemyView enemyView, GunfireView gunfireView)
         {
-            Model = new Gunfire(20, 5, enemyView.Position, transform.position, 1);
-            View = gunfireView;
+            Model = new Gunfire(gunfireView.Position, enemyView.Position);
             Presenter = new GunfirePresenter(Model, View);
             
             if (Model is IUpdateable updateable)
@@ -22,6 +22,11 @@ namespace Setup
         private void OnEnable()
         {
             Presenter.Enable();
+        }
+        
+        private void Update()
+        {
+            Updateable?.Update(Time.deltaTime);
         }
 
         private void OnDisable()

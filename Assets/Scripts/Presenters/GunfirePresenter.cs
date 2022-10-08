@@ -1,4 +1,5 @@
 using Model;
+using UnityEngine;
 using Views;
 
 namespace Presenters
@@ -16,17 +17,24 @@ namespace Presenters
 
         public void Enable()
         {
-            _gunfire.GetHealth().Died += OnModelDied;
+            _gunfire.Moving += OnMoving;
+            _gunfireView.Collided += OnCollided;
         }
 
         public void Disable()
         {
-            _gunfire.GetHealth().Died -= OnModelDied;
+            _gunfire.Moving -= OnMoving;
+            _gunfireView.Collided -= OnCollided;
         }
 
-        public void OnModelDied()
+        private void OnMoving(Vector2 position)
         {
-            
+            _gunfireView.Move(position);
+        }
+        
+        private void OnCollided(EnemyView enemyView)
+        {
+            enemyView.Collide(_gunfire.Damage);
         }
     }
 }

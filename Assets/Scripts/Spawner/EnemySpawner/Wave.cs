@@ -1,14 +1,15 @@
 using System;
-using Model.Enemy;
+using System.Collections.Generic;
 using UnityEngine;
 using Views;
+using Random = UnityEngine.Random;
 
 namespace Spawner
 {
     [Serializable]
     public struct Wave
     {
-        [SerializeField] private EnemyView _enemyView;
+        [SerializeField] private EnemyView[] _enemyViews;
         [SerializeField] private float _timeDelayOfSpawn;
         [SerializeField] private int _countOfEnemy;
         
@@ -17,7 +18,7 @@ namespace Spawner
 
         public float TimeDelayOfSpawn => _timeDelayOfSpawn;
         public int CountOfEnemy => _countOfEnemy;
-        public EnemyView EnemyView => _enemyView;
+        public IEnumerable<EnemyView> EnemyViews => _enemyViews;
 
         public void Spawn()
         {

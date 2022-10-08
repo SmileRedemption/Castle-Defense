@@ -7,6 +7,14 @@ public class HealthBar : Bar
     [SerializeField] private Color _lowColor;
     [SerializeField] private Color _highColor;
 
+    private const float StartValueOfSlider = 1;
+    
+    public void SetStartValueOfSlider()
+    {
+        Slider.value = StartValueOfSlider;
+        _colorOfHealthBar.color = _highColor;
+    }
+
     protected override void ChangeColor() =>
         _colorOfHealthBar.color = Color.Lerp(_lowColor, _highColor, Slider.normalizedValue);
 }

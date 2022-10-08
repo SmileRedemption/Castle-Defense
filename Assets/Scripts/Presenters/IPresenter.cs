@@ -6,6 +6,5 @@ namespace Presenters
     {
         void Enable();
         void Disable();
-        void OnModelDied();
     }
 }

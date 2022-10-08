@@ -388,7 +388,8 @@ GameObject:
   - component: {fileID: 3092613313683562396}
   - component: {fileID: 7493268729881385957}
   - component: {fileID: 127286657035877792}
-  - component: {fileID: 7821949791101065121}
+  - component: {fileID: 6838912608105615814}
+  - component: {fileID: 2393922538802552125}
   m_Layer: 0
   m_Name: LavaGolem
   m_TagString: Untagged
@@ -513,7 +514,7 @@ MonoBehaviour:
   _colorOfHealthBar: {fileID: 4477097182210380307}
   _lowColor: {r: 1, g: 0, b: 0, a: 1}
   _highColor: {r: 0, g: 0.85882354, b: 0.16862746, a: 1}
---- !u!114 &7821949791101065121
+--- !u!114 &6838912608105615814
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -522,7 +523,20 @@ MonoBehaviour:
   m_GameObject: {fileID: 8728153464531783358}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9cd8afafedb74a22bd90de65a696cead, type: 3}
+  m_Script: {fileID: 11500000, guid: 75ec56c009784127acad570b5cb287ea, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &2393922538802552125
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8728153464531783358}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ccfa6bfb8d7a4bc9926df764448c6817, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  View: {fileID: 6838912608105615814}
   _healthBar: {fileID: 127286657035877792}

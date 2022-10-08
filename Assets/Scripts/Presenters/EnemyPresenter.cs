@@ -1,6 +1,5 @@
-using System;
-using Model;
-using Model.Enemy;
+using Model.Enemies;
+using Model.Score;
 using UnityEngine;
 using Views;
 
@@ -10,11 +9,13 @@ namespace Presenters
     {
         private readonly Enemy _enemy;
         private readonly EnemyView _enemyView;
-        
-        public EnemyPresenter(Enemy model, EnemyView view)
+        private readonly Score _score;
+
+        public EnemyPresenter(Enemy model, EnemyView view, Score score)
         {
             _enemy = model;
             _enemyView = view;
+            _score = score;
         }
 
         public void Enable()
@@ -22,6 +23,7 @@ namespace Presenters
             _enemy.GetHealth().Died += OnModelDied;
             _enemy.Moving += OnEnemyMoving;
             _enemy.Attacking += OnEnemyAttacking;
+            _enemyView.Collided += OnViewCollided;
         }
 
         public void Disable()
@@ -29,11 +31,14 @@ namespace Presenters
             _enemy.GetHealth().Died -= OnModelDied;
             _enemy.Moving -= OnEnemyMoving;
             _enemy.Attacking -= OnEnemyAttacking;
+            _enemyView.Collided -= OnViewCollided;
         }
         
-        public void OnModelDied()
+        private void OnModelDied()
         {
-            _enemyView.Died();
+            _enemy.Relieve();
+            _enemyView.TurnOff();
+            _score.OnEnemyDied();
         }
 
         private void OnEnemyAttacking()
@@ -44,6 +49,11 @@ namespace Presenters
         private void OnEnemyMoving(Vector2 position)
         {
             _enemyView.Move(position);
+        }
+        
+        private void OnViewCollided(float damage)
+        {
+            _enemy.ApplyDamage(damage);
         }
     }
 }

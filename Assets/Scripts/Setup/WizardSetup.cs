@@ -13,13 +13,18 @@ namespace Setup
         
         private Health _healthWizard;
         private HealthPresenter _healthPresenter;
-        
+
+        private void Awake()
+        {
+            _root.Init();
+        }
+
         private void OnEnable()
         {
             Model = _root.Wizard;
             Presenter = new HeroPresenter(Model, View);
             
-            _healthWizard = _root.Wizard.GetHealth();
+            _healthWizard = Model.GetHealth();
             _healthPresenter = new HealthPresenter(_healthBar, _healthWizard);
 
             Presenter.Enable();

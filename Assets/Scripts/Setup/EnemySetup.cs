@@ -1,6 +1,6 @@
-using System;
 using Model;
-using Model.Enemy;
+using Model.Enemies;
+using Model.Score;
 using Presenters;
 using UnityEngine;
 using Views;
@@ -10,7 +10,7 @@ namespace Setup
     public class EnemySetup : Setup<Enemy, EnemyView>
     {
         [SerializeField] private HealthBar _healthBar;
-
+        
         private Health _healthGolem;
         private HealthPresenter _healthPresenter;
 
@@ -19,10 +19,10 @@ namespace Setup
             enabled = false;
         }
 
-        public void Init(ITarget target)
+        public void Init(Score score, params ITarget[] targets)
         {
-            Model = new Golem(5, target, View.transform.position);
-            Presenter = new EnemyPresenter(Model, View);
+            Model = new Golem(targets, View.transform.position);
+            Presenter = new EnemyPresenter(Model, View, score);
 
             _healthGolem = Model.GetHealth();
             _healthPresenter = new HealthPresenter(_healthBar, _healthGolem);
@@ -37,6 +37,11 @@ namespace Setup
         {
             Presenter.Enable();
             _healthPresenter.Enable();
+        }
+        
+        private void Update()
+        {
+            Updateable?.Update(Time.deltaTime);
         }
 
         private void OnDisable()

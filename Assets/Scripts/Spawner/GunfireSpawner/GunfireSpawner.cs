@@ -8,28 +8,31 @@ namespace Spawner.GunfireSpawner
 {
     public class GunfireSpawner : ObjectsPool<GunfireView>
     {
-        [SerializeField] private GunfireView _gunfireView;
+        [SerializeField] private GunfireView _gunfirePrefab;
         [SerializeField] private EnemyFinder _enemyFinder;
+        [SerializeField] private Transform _spawnPoint;
+        
         private void Start()
         {
-            Initialize(_gunfireView, transform.position);
+            Initialize(_gunfirePrefab, _spawnPoint.position);
         }
         
         public void Shoot()
         {
-            if (TryGetObject(out  GunfireView gunfire))
+            if (TryGetObject(out GunfireView gunfire))
             {
-                StartCoroutine(SetGunfire(gunfire));
+                SetGunfire(gunfire);
             }
         }
 
-        private IEnumerator SetGunfire(GunfireView gunfireView)
+        private void SetGunfire(GunfireView gunfireView)
         {
-            yield return new WaitUntil(() => _enemyFinder.TryFindEnemy());
-
-            gunfireView.GetComponent<GunfireSetup>().Init(_enemyFinder.EnemyView, _gunfireView);
-            _enemyFinder.EnemyView.TurnOn();
+            if (_enemyFinder.TryFindEnemy())
+            {
+                gunfireView.transform.position = GetPositionOfContainer();
+                gunfireView.GetComponent<GunfireSetup>().Init(_enemyFinder.EnemyView, gunfireView);
+                gunfireView.TurnOn();
+            }
         }
-        
     }
 }

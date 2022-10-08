@@ -1,3 +1,5 @@
+using Model;
+
 namespace Presenters
 {
     public class HealthPresenter : IPresenter
@@ -14,21 +16,19 @@ namespace Presenters
         public void Enable()
         {
             _healthModel.HealthChanged += OnHealthChanged;
-            _healthModel.Died += OnModelDied;
+            _healthModel.Relieved += OnRelieved;
         }
 
         public void Disable()
         {
             _healthModel.HealthChanged -= OnHealthChanged;
-            _healthModel.Died -= OnModelDied;
-        }
-
-        public void OnModelDied()
-        {
-            
+            _healthModel.Relieved -= OnRelieved;
         }
 
         private void OnHealthChanged(float currentHealth, float maxHealth) =>
             _healthView.OnValueChanged(currentHealth, maxHealth);
+
+        private void OnRelieved() => 
+            _healthView.SetStartValueOfSlider();
     }
 }

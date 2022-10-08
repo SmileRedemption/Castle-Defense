@@ -1,5 +1,8 @@
 using System;
+using System.Collections.Generic;
 using Model;
+using Model.Score;
+using Model.Spells;
 using UnityEngine;
 using Views;
 
@@ -9,18 +12,33 @@ public class Root : MonoBehaviour
     [SerializeField] private ArcherView _archerView;
     [SerializeField] private CastleView _castleView;
 
-        
-    private Wizard _wizard;
-    private Archer _archer;
-    private Castle _castle;
-    public Wizard Wizard => _wizard;
-    public Archer Archer => _archer;
-    public Castle Castle => _castle;
+    private bool _isInit;
 
-    private void Awake()
+    public Wizard Wizard { get; private set; }
+    public Archer Archer { get; private set; }
+    public Castle Castle { get; private set; }
+    public HealthSpell HealthSpell { get; private set; }
+    public RageSpell RageSpell { get; private set; }
+    public Score Score { get; private set; }
+
+
+    public void Init()
     {
-        _wizard = new Wizard(100, _wizardView.transform.position);
-        _archer = new Archer(100, _archerView.transform.position);
-        _castle = new Castle(200, 10, _castleView.transform.position);
+        if (_isInit)
+            return;
+        
+        Wizard = new Wizard(_wizardView.Position);
+        Archer = new Archer(_archerView.Position);
+        Castle = new Castle(10, _castleView.Position);
+        HealthSpell = new HealthSpell(5);
+        RageSpell = new RageSpell(5);
+        Score = new Score();
+        
+        _isInit = true;
+    }
+
+    public IEnumerable<Hero> GetHeroes()
+    {
+        return new Hero[] {Wizard, Archer};
     }
 }

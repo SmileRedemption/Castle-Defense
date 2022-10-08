@@ -9,17 +9,22 @@ namespace Setup
     {
         [SerializeField] private Root _root;
         [SerializeField] private HealthBar _healthBar;
-        
-        private Health _healthWizard;
+
+        private Health _healthArcher;
         private HealthPresenter _healthPresenter;
-        
+
+        private void Awake()
+        {
+            _root.Init();
+        }
+
         private void OnEnable()
         {
             Model = _root.Archer;
             Presenter = new HeroPresenter(Model, View);
             
-            _healthWizard = _root.Wizard.GetHealth();
-            _healthPresenter = new HealthPresenter(_healthBar, _healthWizard);
+            _healthArcher = Model.GetHealth();
+            _healthPresenter = new HealthPresenter(_healthBar, _healthArcher);
 
             Presenter.Enable();
             _healthPresenter.Enable();

@@ -7,5 +7,6 @@ namespace Model
     {
         void ApplyDamage(float damage);
         Vector2 Position { get; }
+        bool IsAlive { get; }
     }
 }

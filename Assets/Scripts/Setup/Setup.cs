@@ -13,11 +13,6 @@ namespace Setup
         
         protected TModel Model;
         protected IPresenter Presenter;
-        protected IUpdateable Updateable = null;
-
-        private void Update()
-        {
-            Updateable?.Update(Time.deltaTime);
-        }
+        protected IUpdateable Updateable;
     }
 }

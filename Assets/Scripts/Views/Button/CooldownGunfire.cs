@@ -7,29 +7,21 @@ using UnityEngine.UI;
 public class CooldownGunfire : MonoBehaviour
 {
     [SerializeField] private Image _reloadImage;
-    [SerializeField] private Button _shootButton;
-    [SerializeField] private float _cooldownDuration;
-
-    private bool _isActiveButton = true;
+    [SerializeField] private ShootButton _shootButton;
     
     private void OnEnable()
     {
-        _shootButton.onClick.AddListener(OnShootButtonClick);
-    }
-
-    private void Update()
-    {
-        _shootButton.interactable = _isActiveButton;
+        _shootButton.Add(OnShootButtonClick);
     }
 
     private void OnDisable()
     {
-        _shootButton.onClick.RemoveListener(OnShootButtonClick);
+        _shootButton.Remove(OnShootButtonClick);
     }
 
     private void OnShootButtonClick()
     {
-        StartCoroutine(GunfireReloading(_cooldownDuration));
+        StartCoroutine(GunfireReloading(_shootButton.CooldownDuration));
     }
 
     private IEnumerator GunfireReloading(float duration)
@@ -53,8 +45,8 @@ public class CooldownGunfire : MonoBehaviour
 
     private IEnumerator WaitingToFill()
     {
-        _isActiveButton = false;
+        _shootButton.TurnOff();
         yield return new WaitUntil(() => (int) _reloadImage.fillAmount == 1);
-        _isActiveButton = true;
+        _shootButton.TurnOn();
     }
 }

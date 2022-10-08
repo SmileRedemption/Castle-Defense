@@ -1,3 +1,4 @@
+using System;
 using Spawner;
 using UnityEngine;
 
@@ -7,15 +8,19 @@ namespace Views
     public class EnemyView : View, ISpawnable
     {
         private Animator _animator;
+        private Transform _transform;
 
+        public event Action<float> Collided;
+        
         private void Awake()
         {
             _animator = GetComponent<Animator>();
+            _transform = GetComponent<Transform>();
         }
 
         public void Move(Vector2 position)
         {
-            transform.position = position;
+            _transform.position = position;
             _animator.Play("Running");
         }
 
@@ -32,6 +37,11 @@ namespace Views
         public void TurnOn()
         {
             gameObject.SetActive(true);
+        }
+
+        public void Collide(float damage)
+        {
+            Collided?.Invoke(damage);
         }
     }
 }

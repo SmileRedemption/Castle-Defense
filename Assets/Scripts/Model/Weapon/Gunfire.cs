@@ -1,27 +1,33 @@
+using System;
 using Model;
 using UnityEngine;
 
 public class Gunfire : Transformable, IUpdateable
 {
     private readonly float _speed;
-    private readonly Vector2 _targetPosition;
-
-    public new Vector2 Position { get; private set; }
+    private readonly Vector2 _enemyPosition;
     public float Damage { get; }
 
-    public Gunfire(float maxHealth, float speed, Vector2 targetPosition, Vector2 position, float damage) : base(maxHealth)
+    public event Action<Vector2> Moving;
+
+    public Gunfire(Vector2 position, Vector2 enemyPosition)
     {
-        _speed = speed;
-        _targetPosition = targetPosition;
         Position = position;
-        Damage = damage;
+        _enemyPosition = enemyPosition;
+        
+        _speed = Config.GunfireSpeed;
+        Damage = Config.GunfireDamage;
     }
 
     public void Update(float deltaTime)
     {
-        var nextPosition = Vector2.MoveTowards(Position, _targetPosition, _speed * deltaTime);
+        var nextPosition = Vector2.MoveTowards(Position, _enemyPosition, _speed * deltaTime);
         MoveTo(nextPosition);
     }
-    
-    public void MoveTo(Vector2 position) => Position = position;
+
+    private void MoveTo(Vector2 position)
+    {
+        Position = position;
+        Moving?.Invoke(Position);
+    }
 }

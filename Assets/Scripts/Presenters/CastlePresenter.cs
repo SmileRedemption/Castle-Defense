@@ -24,8 +24,9 @@ namespace Presenters
             _castle.GetHealth().Died -= OnModelDied;
         }
 
-        public void OnModelDied()
+        private void OnModelDied()
         {
+            _castleView.Died();
         }
     }
 }
