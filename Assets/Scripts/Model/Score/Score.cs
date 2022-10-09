@@ -11,7 +11,7 @@ namespace Model.Score
 
         public void OnEnemyDied()
         {
-            Value += Config.GolemAward;
+            Value += Config.GolemScore;
             ScoreChanged?.Invoke(Value);
         }
     }

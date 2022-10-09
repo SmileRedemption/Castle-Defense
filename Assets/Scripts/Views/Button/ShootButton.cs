@@ -59,6 +59,11 @@ public class ShootButton : MonoBehaviour
         _shootButton.interactable = false;
     }
 
+    public void OnHeroRelieved()
+    {
+        _shootButton.interactable = true;
+    }
+
     public void RageOn(float speedUp)
     {
         StartCoroutine(DurationOfRageTime(7f));

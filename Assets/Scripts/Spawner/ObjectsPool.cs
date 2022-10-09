@@ -79,7 +79,7 @@ namespace Spawner
             if (count == 0)
                 throw new InvalidOperationException("Sequence was empty");
 
-                return current;
+            return current;
         }
     }
 }

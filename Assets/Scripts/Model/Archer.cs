@@ -7,6 +7,5 @@ namespace Model
         public Archer(Vector2 position) : base(position)
         {
         }
-        
     }
 }

@@ -30,8 +30,8 @@ namespace Model
 
             if (CurrentHealth <= 0)
             {
-                Died?.Invoke();
                 IsAlive = false;
+                Died?.Invoke();
             }
         }
         

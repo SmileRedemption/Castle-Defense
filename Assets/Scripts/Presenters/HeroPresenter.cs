@@ -5,42 +5,51 @@ namespace Presenters
 {
     public class HeroPresenter : IPresenter
     {
-        private readonly Hero _model;
-        private readonly TargetView _targetView;
+        private readonly Hero _hero;
+        private readonly HeroView _heroView;
 
-        public HeroPresenter(Hero model, TargetView targetView)
+        public HeroPresenter(Hero hero, HeroView heroView)
         {
-            _model = model;
-            _targetView = targetView;
+            _hero = hero;
+            _heroView = heroView;
         }
 
         public void Enable()
         {
-            _model.GetHealth().Died += OnModelDied;
-            _model.RestoredHealth += OnRestoredHealth;
-            _model.Raged += OnRaged;
+            _hero.GetHealth().Died += OnModelDied;
+            _hero.RestoredHealth += OnRestoredHealth;
+            _hero.Raged += OnRaged;
+
+            _heroView.Relieved += OnViewRelieved;
         }
 
         public void Disable()
         {
-            _model.GetHealth().Died -= OnModelDied;
-            _model.RestoredHealth -= OnRestoredHealth;
-            _model.Raged -= OnRaged;
+            _hero.GetHealth().Died -= OnModelDied;
+            _hero.RestoredHealth -= OnRestoredHealth;
+            _hero.Raged -= OnRaged;
+            
+            _heroView.Relieved += OnViewRelieved;
         }
 
         private void OnModelDied()
         {
-            _targetView.Died();
+            _heroView.Died();
         }
 
         private void OnRaged(float speedUp)
         {
-            _targetView.Rage(speedUp);
+            _heroView.Rage(speedUp);
         }
 
         private void OnRestoredHealth()
         {
-            _targetView.RestoreHealth();
+            _heroView.RestoreHealth();
+        }
+
+        private void OnViewRelieved()
+        {
+            _hero.Relieve();
         }
     }
 }

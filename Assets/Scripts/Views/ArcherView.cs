@@ -1,6 +1,6 @@
 namespace Views
 {
-    public class ArcherView : TargetView
+    public class ArcherView : HeroView
     {
         
     }

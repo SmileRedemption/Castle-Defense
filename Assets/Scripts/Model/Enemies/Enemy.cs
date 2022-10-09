@@ -11,8 +11,7 @@ namespace Model.Enemies
         private readonly BaseEnemyState[] _states;
         private readonly BaseEnemyState _startEnemyState;
         private readonly ITarget[] _targets;
-
-        public int Award { get; protected set; }
+        
         public ITarget CurrentTarget { get; private set; }
         public BaseEnemyState CurrentState { get; private set; }
         public new Vector2 Position { get; private set; }
@@ -38,6 +37,9 @@ namespace Model.Enemies
 
         public void Update(float deltaTime)
         {
+            if (CurrentTarget == null)
+                return;
+            
             CurrentState.TryMoveTo(CurrentTarget.Position, deltaTime);
             CurrentState.TryAttack(CurrentTarget);
         }
@@ -64,7 +66,7 @@ namespace Model.Enemies
         private ITarget GetAliveTarget()
         {
             var aliveTargets = _targets.Where(target => target is Hero && target.IsAlive).ToArray();
-            return aliveTargets[Random.Range(0, aliveTargets.Length)];
+            return aliveTargets.Length != 0 ? aliveTargets[Random.Range(0, aliveTargets.Length)] : null;
         }
 
         public void Relieve()

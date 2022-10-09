@@ -1,8 +1,10 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using Model;
 using Model.Score;
 using Model.Spells;
+using Presenters;
 using UnityEngine;
 using Views;
 
@@ -11,8 +13,10 @@ public class Root : MonoBehaviour
     [SerializeField] private WizardView _wizardView;
     [SerializeField] private ArcherView _archerView;
     [SerializeField] private CastleView _castleView;
+    [SerializeField] private Wave[] _waves;
 
     private bool _isInit;
+    private IPresenter _presenter;
 
     public Wizard Wizard { get; private set; }
     public Archer Archer { get; private set; }
@@ -20,7 +24,7 @@ public class Root : MonoBehaviour
     public HealthSpell HealthSpell { get; private set; }
     public RageSpell RageSpell { get; private set; }
     public Score Score { get; private set; }
-
+    public Wave[] Waves => _waves;
 
     public void Init()
     {
@@ -30,10 +34,10 @@ public class Root : MonoBehaviour
         Wizard = new Wizard(_wizardView.Position);
         Archer = new Archer(_archerView.Position);
         Castle = new Castle(10, _castleView.Position);
-        HealthSpell = new HealthSpell(5);
-        RageSpell = new RageSpell(5);
+        HealthSpell = new HealthSpell();
+        RageSpell = new RageSpell();
         Score = new Score();
-        
+
         _isInit = true;
     }
 

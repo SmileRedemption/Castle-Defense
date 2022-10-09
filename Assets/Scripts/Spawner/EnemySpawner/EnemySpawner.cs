@@ -1,17 +1,21 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
+using Model;
 using Setup;
 using UnityEngine;
 using Views;
 using Random = UnityEngine.Random;
 
 namespace Spawner
-{
+{ 
     public class EnemySpawner : ObjectsPool<EnemyView>
     {
-        [SerializeField] private List<Wave> _waves;
         [SerializeField] private Vector2[] _spawnPoints;
         [SerializeField] private Root _root;
+        [SerializeField] private WaveBar _waveBar;
+        
+        private Wave[] _waves;
 
         private Wave _currentWave;
         private int _numberOfCurrentWave;
@@ -19,13 +23,15 @@ namespace Spawner
         private void Awake()
         {
             _root.Init();
-            SetCurrentWave(_numberOfCurrentWave);
+            _waves = _root.Waves;
+            _currentWave = _waves[_numberOfCurrentWave];
             Initialize(_currentWave.EnemyViews, _spawnPoints[Random.Range(0, _spawnPoints.Length)]);
         }
 
         private void OnEnable()
         {
             _currentWave.AllEnemiesSpawned += OnAllEnemiesSpawned;
+            _waveBar.GetComponent<WaveSetup>().Init(_currentWave);
         }
 
         private void OnDisable()
@@ -66,14 +72,22 @@ namespace Spawner
             enemyView.TurnOn();
         }
 
-        private void SetCurrentWave(int indexOfWave)
-        {
-            _currentWave = _waves[indexOfWave];
-        }
-        
         private void OnAllEnemiesSpawned()
         {
+            if (_numberOfCurrentWave == _waves.Length - 1)
+                return;
+            
+            SetNextWave();
+            Debug.Log($"Nest wave {_numberOfCurrentWave}");
+        }
+
+        private void SetNextWave()
+        {
+            _currentWave.AllEnemiesSpawned -= OnAllEnemiesSpawned;
+            _waveBar.GetComponent<WaveSetup>().enabled = false;
             _currentWave = _waves[++_numberOfCurrentWave];
+            _waveBar.GetComponent<WaveSetup>().Init(_currentWave);
+            _currentWave.AllEnemiesSpawned += OnAllEnemiesSpawned;
         }
     }
 }

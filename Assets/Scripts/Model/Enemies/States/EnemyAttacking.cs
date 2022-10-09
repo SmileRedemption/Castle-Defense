@@ -32,11 +32,12 @@ namespace Model.Enemies.States
             {
                 Enemy.Attack();
                 target.ApplyDamage(_damage);
-                return;
             }
-            
-            DiedTarget();
-            Enemy.SwitchState<EnemyMoving>();
+            else
+            {
+                DiedTarget();
+                Enemy.SwitchState<EnemyMoving>();
+            }
         }
     }
 }

@@ -4,7 +4,7 @@ namespace Model.Spells
     {
         public float CountOfSpeedUp { get; private set; }
 
-        public RageSpell(int maxLevel) : base(maxLevel)
+        public RageSpell() 
         {
             CountOfSpeedUp = 2;
         }

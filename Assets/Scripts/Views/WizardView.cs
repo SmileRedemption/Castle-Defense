@@ -1,6 +1,6 @@
 namespace Views
 {
-    public class WizardView : TargetView
+    public class WizardView : HeroView
     {
         
     }

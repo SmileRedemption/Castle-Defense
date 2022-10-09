@@ -9,6 +9,7 @@ namespace Model
 
         public new Vector2 Position { get; }
         public bool IsAlive => Health.IsAlive;
+        public event Action TookDamage;
 
         public Castle(float damage, Vector2 position) : base(Config.CastleHealth)
         {
@@ -18,7 +19,10 @@ namespace Model
 
         public void ApplyDamage(float damage)
         {
-            damage -= damage / 2; 
+            const int numberOfMultiplyDamage = 10;
+            
+            damage *= numberOfMultiplyDamage;
+            TookDamage?.Invoke();
             Health.ApplyDamage(damage);
         }
     }

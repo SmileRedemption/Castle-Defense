@@ -27,6 +27,11 @@ namespace Model
             spell.Accept(new SpellVisitor(this));
         }
 
+        public void Relieve()
+        {
+            Health.Relieve();
+        }
+
         private void Rage(float speedUp)
         {
             Raged?.Invoke(speedUp);

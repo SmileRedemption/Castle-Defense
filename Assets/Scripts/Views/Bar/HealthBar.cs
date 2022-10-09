@@ -9,12 +9,24 @@ public class HealthBar : Bar
 
     private const float StartValueOfSlider = 1;
     
-    public void SetStartValueOfSlider()
+    public override void SetStartValueOfSlider()
     {
         Slider.value = StartValueOfSlider;
         _colorOfHealthBar.color = _highColor;
     }
 
-    protected override void ChangeColor() =>
+    protected override void ChangeColor()
+    {
         _colorOfHealthBar.color = Color.Lerp(_lowColor, _highColor, Slider.normalizedValue);
+    }
+
+    public void OnDied()
+    {
+        gameObject.SetActive(false);
+    }
+
+    public void OnRelieved()
+    {
+        gameObject.SetActive(true);
+    }
 }
