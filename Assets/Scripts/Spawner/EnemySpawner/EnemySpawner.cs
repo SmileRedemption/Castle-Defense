@@ -13,7 +13,6 @@ namespace Spawner
     {
         [SerializeField] private Vector2[] _spawnPoints;
         [SerializeField] private Root _root;
-        [SerializeField] private WaveBar _waveBar;
         
         private Wave[] _waves;
 
@@ -31,7 +30,6 @@ namespace Spawner
         private void OnEnable()
         {
             _currentWave.AllEnemiesSpawned += OnAllEnemiesSpawned;
-            _waveBar.GetComponent<WaveSetup>().Init(_currentWave);
         }
 
         private void OnDisable()
@@ -78,15 +76,12 @@ namespace Spawner
                 return;
             
             SetNextWave();
-            Debug.Log($"Nest wave {_numberOfCurrentWave}");
         }
 
         private void SetNextWave()
         {
             _currentWave.AllEnemiesSpawned -= OnAllEnemiesSpawned;
-            _waveBar.GetComponent<WaveSetup>().enabled = false;
             _currentWave = _waves[++_numberOfCurrentWave];
-            _waveBar.GetComponent<WaveSetup>().Init(_currentWave);
             _currentWave.AllEnemiesSpawned += OnAllEnemiesSpawned;
         }
     }

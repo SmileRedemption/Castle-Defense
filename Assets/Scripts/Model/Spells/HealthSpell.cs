@@ -4,12 +4,7 @@ namespace Model.Spells
 {
     public class HealthSpell : Spell
     {
-        public float CountOfRestoreHealth { get; private set; }
-
-        public HealthSpell()
-        {
-            CountOfRestoreHealth = 20f;
-        }
+        public float CountOfRestoreHealth => Config.CountOfRestoreHealth;
 
         public override void Accept(ISpellVisitor spellVisitor)
         {

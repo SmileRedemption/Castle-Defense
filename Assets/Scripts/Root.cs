@@ -16,7 +16,6 @@ public class Root : MonoBehaviour
     [SerializeField] private Wave[] _waves;
 
     private bool _isInit;
-    private IPresenter _presenter;
 
     public Wizard Wizard { get; private set; }
     public Archer Archer { get; private set; }
@@ -33,7 +32,7 @@ public class Root : MonoBehaviour
         
         Wizard = new Wizard(_wizardView.Position);
         Archer = new Archer(_archerView.Position);
-        Castle = new Castle(10, _castleView.Position);
+        Castle = new Castle(_castleView.Position);
         HealthSpell = new HealthSpell();
         RageSpell = new RageSpell();
         Score = new Score();

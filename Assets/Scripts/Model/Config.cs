@@ -2,7 +2,7 @@ namespace Model
 {
     public static class Config
     {
-        public const float EnemySpeedOfMovement = 2f;
+        public const float EnemySpeedOfMovement = 1.5f;
         public const float EnemyDamage = 0.01f;
         public const float EnemyHealth = 3f;
         
@@ -17,6 +17,9 @@ namespace Model
 
         public const int GolemScore = 15;
 
+        public const float CountOfRestoreHealth = 50;
+        public const float CountOfSpeedUp = 2;
+        
         public const string HealthMessageException = "Object must extend constructor with parameter";
     }
 }

@@ -17,17 +17,17 @@ namespace Presenters
 
         public void Enable()
         {
-            _gunfire.Moving += OnMoving;
+            _gunfire.Moved += OnMoved;
             _gunfireView.Collided += OnCollided;
         }
 
         public void Disable()
         {
-            _gunfire.Moving -= OnMoving;
+            _gunfire.Moved -= OnMoved;
             _gunfireView.Collided -= OnCollided;
         }
 
-        private void OnMoving(Vector2 position)
+        private void OnMoved(Vector2 position)
         {
             _gunfireView.Move(position);
         }

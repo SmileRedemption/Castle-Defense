@@ -7,6 +7,7 @@ namespace Views
     [RequireComponent(typeof(Animator))]
     public class EnemyView : View, ISpawnable
     {
+        [SerializeField] private ParticleSystem _particleSystem;
         private Animator _animator;
         private Transform _transform;
 
@@ -42,6 +43,12 @@ namespace Views
         public void Collide(float damage)
         {
             Collided?.Invoke(damage);
+        }
+
+        public override void Died()
+        {
+            _particleSystem.Play();
+            Invoke(nameof(TurnOff), 1f);
         }
     }
 }

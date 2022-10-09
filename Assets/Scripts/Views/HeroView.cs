@@ -55,7 +55,8 @@ namespace Views
         
         private IEnumerator WaitingToRelieve()
         {
-            yield return new WaitForSeconds(10f);
+            const float delayOfWaitingToRelieve = 10f; 
+            yield return new WaitForSeconds(delayOfWaitingToRelieve);
             Relieve();
         }
     }

@@ -16,8 +16,8 @@ namespace Model.Enemies
         public BaseEnemyState CurrentState { get; private set; }
         public new Vector2 Position { get; private set; }
 
-        public event Action<Vector2> Moving;
-        public event Action Attacking;
+        public event Action<Vector2> Moved;
+        public event Action Attacked;
 
         protected Enemy(ITarget[] targets, Vector2 position) : base(Config.EnemyHealth)
         {
@@ -47,7 +47,7 @@ namespace Model.Enemies
         public void MoveTo(Vector2 position)
         {
             Position = position;
-            Moving?.Invoke(Position);
+            Moved?.Invoke(Position);
         }
 
         public void SwitchState<T>() where T : BaseEnemyState
@@ -83,7 +83,7 @@ namespace Model.Enemies
         
         public void Attack()
         {
-            Attacking?.Invoke();
+            Attacked?.Invoke();
         }
 
         public void ApplyDamage(float damage)

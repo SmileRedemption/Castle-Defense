@@ -21,32 +21,32 @@ namespace Presenters
         public void Enable()
         {
             _enemy.GetHealth().Died += OnModelDied;
-            _enemy.Moving += OnEnemyMoving;
-            _enemy.Attacking += OnEnemyAttacking;
+            _enemy.Moved += OnEnemyMoved;
+            _enemy.Attacked += OnEnemyAttacked;
             _enemyView.Collided += OnViewCollided;
         }
 
         public void Disable()
         {
             _enemy.GetHealth().Died -= OnModelDied;
-            _enemy.Moving -= OnEnemyMoving;
-            _enemy.Attacking -= OnEnemyAttacking;
+            _enemy.Moved -= OnEnemyMoved;
+            _enemy.Attacked -= OnEnemyAttacked;
             _enemyView.Collided -= OnViewCollided;
         }
         
         private void OnModelDied()
         {
             _enemy.Relieve();
-            _enemyView.TurnOff();
+            _enemyView.Died();
             _score.OnEnemyDied();
         }
 
-        private void OnEnemyAttacking()
+        private void OnEnemyAttacked()
         {
             _enemyView.Attack();
         }
         
-        private void OnEnemyMoving(Vector2 position)
+        private void OnEnemyMoved(Vector2 position)
         {
             _enemyView.Move(position);
         }

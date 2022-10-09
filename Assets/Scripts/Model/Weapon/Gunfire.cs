@@ -8,7 +8,7 @@ public class Gunfire : Transformable, IUpdateable
     private readonly Vector2 _enemyPosition;
     public float Damage { get; }
 
-    public event Action<Vector2> Moving;
+    public event Action<Vector2> Moved;
 
     public Gunfire(Vector2 position, Vector2 enemyPosition)
     {
@@ -28,6 +28,6 @@ public class Gunfire : Transformable, IUpdateable
     private void MoveTo(Vector2 position)
     {
         Position = position;
-        Moving?.Invoke(Position);
+        Moved?.Invoke(Position);
     }
 }
