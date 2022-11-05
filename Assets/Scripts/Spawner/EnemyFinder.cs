@@ -14,7 +14,7 @@ namespace Spawner
         {
             _transform = GetComponent<Transform>();
         }
-    
+
         public bool TryFindEnemy()
         {
             var hit = Physics2D.Raycast(_transform.position, Vector2.right, _rayDistance);
@@ -29,7 +29,7 @@ namespace Spawner
             }
 
             EnemyView = null;
-        
+
             return false;
         }
     }

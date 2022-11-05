@@ -1,6 +1,5 @@
 using System;
 using System.Collections;
-using Model.Score;
 using UnityEngine;
 
 namespace Views
@@ -9,16 +8,20 @@ namespace Views
     public abstract class HeroView : View
     {
         [SerializeField] private ShootButton _shootButton;
-        
+
         private Animator _animator;
+
+        private readonly int _tryDie = Animator.StringToHash("TryDie");
+        private readonly int _tryRelieve = Animator.StringToHash("TryRelieve");
+        private readonly int _tryAttack = Animator.StringToHash("TryAttack");
+
+        public event Action Relieved;
 
         private void Awake()
         {
             _animator = GetComponent<Animator>();
         }
 
-        public event Action Relieved;
-        
         public void Rage(float speedUp)
         {
             _shootButton.RageOn(speedUp);
@@ -26,9 +29,8 @@ namespace Views
 
         public void RestoreHealth()
         {
-            
         }
-        
+
         public override void Died()
         {
             _shootButton.OnHeroDied();
@@ -45,17 +47,22 @@ namespace Views
 
         private void TurnOff()
         {
-            _animator.Play("Die");
+            _animator.SetTrigger(_tryDie);
         }
 
         private void TurnOn()
         {
-            _animator.Play("IDLE");
+            _animator.SetTrigger(_tryRelieve);
         }
-        
+
+        public void Attack()
+        {
+            _animator.SetTrigger(_tryAttack);
+        }
+
         private IEnumerator WaitingToRelieve()
         {
-            const float delayOfWaitingToRelieve = 10f; 
+            const float delayOfWaitingToRelieve = 7f;
             yield return new WaitForSeconds(delayOfWaitingToRelieve);
             Relieve();
         }

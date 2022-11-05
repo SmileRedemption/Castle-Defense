@@ -5,9 +5,9 @@ namespace Presenters
     public class HealthPresenter : IPresenter
     {
         private readonly HealthBar _healthView;
-        private readonly Health _healthModel;
+        private readonly IHealth _healthModel;
 
-        public HealthPresenter(HealthBar healthView, Health healthModel)
+        public HealthPresenter(HealthBar healthView, IHealth healthModel)
         {
             _healthView = healthView;
             _healthModel = healthModel;

@@ -1,5 +1,3 @@
-using System;
-using System.Collections;
 using Setup;
 using UnityEngine;
 using Views;
@@ -11,12 +9,12 @@ namespace Spawner.GunfireSpawner
         [SerializeField] private GunfireView _gunfirePrefab;
         [SerializeField] private EnemyFinder _enemyFinder;
         [SerializeField] private Transform _spawnPoint;
-        
+
         private void Start()
         {
             Initialize(_gunfirePrefab, _spawnPoint.position);
         }
-        
+
         public void Shoot()
         {
             if (TryGetObject(out GunfireView gunfire))

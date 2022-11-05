@@ -31,7 +31,7 @@ namespace Presenters
         private void OnClick()
         {
             var aliveHeroes = _heroes.Where(hero => hero.IsAlive);
-            
+
             foreach (var hero in aliveHeroes)
                 hero.UseSpell(_spell);
         }

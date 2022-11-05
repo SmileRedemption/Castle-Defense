@@ -20,7 +20,7 @@ namespace Presenters
 
         public void Enable()
         {
-            _enemy.GetHealth().Died += OnModelDied;
+            _enemy.Health.Died += OnModelDied;
             _enemy.Moved += OnEnemyMoved;
             _enemy.Attacked += OnEnemyAttacked;
             _enemyView.Collided += OnViewCollided;
@@ -28,15 +28,14 @@ namespace Presenters
 
         public void Disable()
         {
-            _enemy.GetHealth().Died -= OnModelDied;
+            _enemy.Health.Died -= OnModelDied;
             _enemy.Moved -= OnEnemyMoved;
             _enemy.Attacked -= OnEnemyAttacked;
             _enemyView.Collided -= OnViewCollided;
         }
-        
+
         private void OnModelDied()
         {
-            _enemy.Relieve();
             _enemyView.Died();
             _score.OnEnemyDied();
         }
@@ -45,12 +44,12 @@ namespace Presenters
         {
             _enemyView.Attack();
         }
-        
+
         private void OnEnemyMoved(Vector2 position)
         {
             _enemyView.Move(position);
         }
-        
+
         private void OnViewCollided(float damage)
         {
             _enemy.ApplyDamage(damage);

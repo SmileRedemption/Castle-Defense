@@ -3,12 +3,14 @@ using Spawner.GunfireSpawner;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.UI;
+using Views;
 
 [RequireComponent(typeof(GunfireSpawner))]
 public class ShootButton : MonoBehaviour
 {
     [SerializeField] private Button _shootButton;
     [SerializeField] private float _cooldownDuration;
+    [SerializeField] private HeroView _heroView;
 
     private GunfireSpawner _gunfireSpawner;
     public float CooldownDuration { get; private set; }
@@ -23,7 +25,7 @@ public class ShootButton : MonoBehaviour
     {
         _shootButton.onClick.AddListener(OnShootButtonClick);
     }
-    
+
     private void OnDisable()
     {
         _shootButton.onClick.RemoveListener(OnShootButtonClick);
@@ -31,9 +33,10 @@ public class ShootButton : MonoBehaviour
 
     private void OnShootButtonClick()
     {
+        _heroView.Attack();
         _gunfireSpawner.Shoot();
     }
-    
+
     public void Add(UnityAction action)
     {
         _shootButton.onClick.AddListener(action);

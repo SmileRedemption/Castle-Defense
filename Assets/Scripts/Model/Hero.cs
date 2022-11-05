@@ -4,19 +4,18 @@ using UnityEngine;
 
 namespace Model
 {
-    public abstract class Hero : Transformable, ITarget
-    { 
+    public abstract class Hero : Entity, ITarget
+    {
         public new Vector2 Position { get; }
-        public bool IsAlive => Health.IsAlive;
 
         public event Action<float> Raged;
         public event Action RestoredHealth;
-        
+
         protected Hero(Vector2 position) : base(Config.HeroHealth)
         {
             Position = position;
         }
-        
+
         public void ApplyDamage(float damage)
         {
             Health.ApplyDamage(damage);
@@ -45,7 +44,7 @@ namespace Model
         private class SpellVisitor : ISpellVisitor
         {
             private readonly Hero _hero;
-            
+
             public SpellVisitor(Hero hero)
             {
                 _hero = hero;
@@ -53,7 +52,7 @@ namespace Model
 
             public void UseSpell(HealthSpell healthSpell)
             {
-                _hero.GetHealth().UseHeelSpell(healthSpell.CountOfRestoreHealth);
+                _hero.Health.UseHeelSpell(healthSpell.CountOfRestoreHealth);
                 _hero.RestoreHealth();
             }
 

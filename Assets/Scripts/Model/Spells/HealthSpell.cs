@@ -1,5 +1,3 @@
-using System;
-
 namespace Model.Spells
 {
     public class HealthSpell : Spell

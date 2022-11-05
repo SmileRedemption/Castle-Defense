@@ -16,7 +16,7 @@ namespace Presenters
 
         public void Enable()
         {
-            _hero.GetHealth().Died += OnModelDied;
+            _hero.Health.Died += OnModelDied;
             _hero.RestoredHealth += OnRestoredHealth;
             _hero.Raged += OnRaged;
 
@@ -25,10 +25,10 @@ namespace Presenters
 
         public void Disable()
         {
-            _hero.GetHealth().Died -= OnModelDied;
+            _hero.Health.Died -= OnModelDied;
             _hero.RestoredHealth -= OnRestoredHealth;
             _hero.Raged -= OnRaged;
-            
+
             _heroView.Relieved += OnViewRelieved;
         }
 

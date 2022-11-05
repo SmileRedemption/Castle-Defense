@@ -6,13 +6,20 @@ namespace Views
 {
     public class GunfireView : View, ISpawnable
     {
+        private Transform _transform;
+
         public event Action<EnemyView> Collided;
-        
+
+        private void Awake()
+        {
+            _transform = GetComponent<Transform>();
+        }
+
         public void Move(Vector2 position)
         {
-            transform.position = position;
+            _transform.position = position;
         }
-        
+
         public void TurnOff()
         {
             gameObject.SetActive(false);
@@ -29,7 +36,7 @@ namespace Views
             {
                 Collided?.Invoke(enemyView);
             }
-            
+
             TurnOff();
         }
     }

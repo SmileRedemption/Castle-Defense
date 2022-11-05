@@ -1,19 +1,16 @@
-using System;
 using System.Collections;
-using System.Collections.Generic;
-using Model;
 using Setup;
 using UnityEngine;
 using Views;
 using Random = UnityEngine.Random;
 
-namespace Spawner
-{ 
+namespace Spawner.EnemySpawner
+{
     public class EnemySpawner : ObjectsPool<EnemyView>
     {
-        [SerializeField] private Vector2[] _spawnPoints;
+        [SerializeField] private Transform[] _spawnPoints;
         [SerializeField] private Root _root;
-        
+
         private Wave[] _waves;
 
         private Wave _currentWave;
@@ -24,7 +21,7 @@ namespace Spawner
             _root.Init();
             _waves = _root.Waves;
             _currentWave = _waves[_numberOfCurrentWave];
-            Initialize(_currentWave.EnemyViews, _spawnPoints[Random.Range(0, _spawnPoints.Length)]);
+            Initialize(_currentWave.EnemyViews, _spawnPoints[Random.Range(0, _spawnPoints.Length)].position);
         }
 
         private void OnEnable()
@@ -46,9 +43,9 @@ namespace Spawner
         {
             while (enabled)
             {
-                if (_currentWave.Equals(null)) 
+                if (_currentWave.Equals(null))
                     continue;
-            
+
                 yield return new WaitForSeconds(_currentWave.TimeDelayOfSpawn);
                 Spawn();
             }
@@ -74,7 +71,7 @@ namespace Spawner
         {
             if (_numberOfCurrentWave == _waves.Length - 1)
                 return;
-            
+
             SetNextWave();
         }
 

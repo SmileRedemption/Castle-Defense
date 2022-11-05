@@ -1,9 +1,8 @@
 using System;
-using Model.Enemies;
 
 namespace Model.Score
 {
-    public class Score : Transformable
+    public class Score : Entity
     {
         public int Value { get; private set; }
 

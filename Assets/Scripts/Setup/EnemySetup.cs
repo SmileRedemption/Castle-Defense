@@ -10,8 +10,8 @@ namespace Setup
     public class EnemySetup : Setup<Enemy, EnemyView>
     {
         [SerializeField] private HealthBar _healthBar;
-        
-        private Health _healthGolem;
+
+        private IHealth _healthGolem;
         private HealthPresenter _healthPresenter;
 
         private void Awake()
@@ -24,9 +24,10 @@ namespace Setup
             Model = new Golem(targets, View.transform.position);
             Presenter = new EnemyPresenter(Model, View, score);
 
-            _healthGolem = Model.GetHealth();
+            _healthGolem = Model.Health;
             _healthPresenter = new HealthPresenter(_healthBar, _healthGolem);
-                
+            _healthBar.SetStartValueOfSlider();
+
             if (Model is IUpdateable updateable)
                 Updateable = updateable;
 
@@ -38,7 +39,7 @@ namespace Setup
             Presenter.Enable();
             _healthPresenter.Enable();
         }
-        
+
         private void Update()
         {
             Updateable?.Update(Time.deltaTime);

@@ -1,23 +1,22 @@
 using UnityEngine;
 
-
 namespace Model.Enemies.States
 {
     public class EnemyAttacking : BaseEnemyState
     {
         private readonly float _damage;
-        
+
         public EnemyAttacking(Enemy enemy, float damage) : base(enemy)
         {
             _damage = damage;
         }
 
-        public override void Start()
+        public override void Enter()
         {
             IsEnable = true;
         }
 
-        public override void Stop()
+        public override void Exit()
         {
             IsEnable = false;
         }

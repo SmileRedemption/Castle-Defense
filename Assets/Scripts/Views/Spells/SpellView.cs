@@ -21,12 +21,12 @@ public class SpellView : View
         _spellButton.onClick.RemoveListener(OnHeelButtonClick);
         _spellButton.onClick.RemoveListener(action);
     }
-    
+
     private void OnHeelButtonClick()
     {
         StartCoroutine(HeelReloading(_cooldownDuration));
     }
-    
+
     private IEnumerator HeelReloading(float duration)
     {
         _reloadImage.fillAmount = 0;
@@ -43,7 +43,6 @@ public class SpellView : View
         }
 
         _reloadImage.fillAmount = 1;
-        
     }
 
     private IEnumerator WaitingToFill()
@@ -51,10 +50,5 @@ public class SpellView : View
         _spellButton.interactable = false;
         yield return new WaitUntil(() => (int) _reloadImage.fillAmount == 1);
         _spellButton.interactable = true;
-    }
-
-    public override void Died()
-    {
-            
     }
 }

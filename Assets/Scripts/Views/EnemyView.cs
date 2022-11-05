@@ -7,12 +7,15 @@ namespace Views
     [RequireComponent(typeof(Animator))]
     public class EnemyView : View, ISpawnable
     {
-        [SerializeField] private ParticleSystem _particleSystem;
         private Animator _animator;
         private Transform _transform;
 
+        private readonly int _tryMove = Animator.StringToHash("TryMove");
+        private readonly int _tryAttack = Animator.StringToHash("TryAttack");
+        private readonly int _tryDie = Animator.StringToHash("TryDie");
+
         public event Action<float> Collided;
-        
+
         private void Awake()
         {
             _animator = GetComponent<Animator>();
@@ -21,17 +24,18 @@ namespace Views
 
         public void Move(Vector2 position)
         {
+            _animator.SetTrigger(_tryMove);
             _transform.position = position;
-            _animator.Play("Running");
         }
 
         public void Attack()
         {
-            _animator.Play("Attack");
+            _animator.SetTrigger(_tryAttack);
         }
 
         public void TurnOff()
         {
+            _animator.SetTrigger(_tryMove);
             gameObject.SetActive(false);
         }
 
@@ -47,8 +51,8 @@ namespace Views
 
         public override void Died()
         {
-            _particleSystem.Play();
-            Invoke(nameof(TurnOff), 1f);
+            _animator.SetTrigger(_tryDie);
+            Invoke(nameof(TurnOff), 0.5f);
         }
     }
 }

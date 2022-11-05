@@ -1,5 +1,3 @@
-using Model;
-
 namespace Presenters
 {
     public interface IPresenter

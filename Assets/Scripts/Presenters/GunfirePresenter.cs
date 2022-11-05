@@ -1,10 +1,10 @@
-using Model;
+using Model.Weapon;
 using UnityEngine;
 using Views;
 
 namespace Presenters
 {
-    public class GunfirePresenter : IPresenter 
+    public class GunfirePresenter : IPresenter
     {
         private readonly Gunfire _gunfire;
         private readonly GunfireView _gunfireView;
@@ -31,7 +31,7 @@ namespace Presenters
         {
             _gunfireView.Move(position);
         }
-        
+
         private void OnCollided(EnemyView enemyView)
         {
             enemyView.Collide(_gunfire.Damage);

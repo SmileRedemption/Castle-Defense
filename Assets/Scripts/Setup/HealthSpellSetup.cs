@@ -1,4 +1,3 @@
-using System;
 using Model.Spells;
 using Presenters;
 using UnityEngine;
@@ -14,7 +13,7 @@ namespace Setup
             _root.Init();
             Model = _root.HealthSpell;
             Presenter = new SpellPresenter(Model, View, _root.GetHeroes());
-            
+
             Presenter.Enable();
         }
 

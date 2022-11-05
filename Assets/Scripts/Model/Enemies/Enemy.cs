@@ -6,15 +6,12 @@ using Random = UnityEngine.Random;
 
 namespace Model.Enemies
 {
-    public abstract class Enemy : Transformable, IUpdateable
+    public abstract class Enemy : Entity, IUpdateable
     {
         private readonly BaseEnemyState[] _states;
-        private readonly BaseEnemyState _startEnemyState;
         private readonly ITarget[] _targets;
-        
-        public ITarget CurrentTarget { get; private set; }
-        public BaseEnemyState CurrentState { get; private set; }
-        public new Vector2 Position { get; private set; }
+        private ITarget _currentTarget;
+        private BaseEnemyState _currentState;
 
         public event Action<Vector2> Moved;
         public event Action Attacked;
@@ -23,7 +20,7 @@ namespace Model.Enemies
         {
             _targets = targets;
             Position = position;
-            CurrentTarget = GetAliveTarget();
+            _currentTarget = GetAliveTarget();
 
             _states = new BaseEnemyState[]
             {
@@ -31,17 +28,19 @@ namespace Model.Enemies
                 new EnemyMoving(this, Config.EnemySpeedOfMovement)
             };
 
-            _startEnemyState = _states.FirstOrDefault(state => state is EnemyMoving);
-            CurrentState = _startEnemyState;
+            _currentState = _states.FirstOrDefault(state => state is EnemyMoving);
         }
 
         public void Update(float deltaTime)
         {
-            if (CurrentTarget == null)
+            if (_currentTarget == null)
                 return;
-            
-            CurrentState.TryMoveTo(CurrentTarget.Position, deltaTime);
-            CurrentState.TryAttack(CurrentTarget);
+
+            if (IsAlive == false)
+                return;
+
+            _currentState.TryMoveTo(_currentTarget.Position, deltaTime);
+            _currentState.TryAttack(_currentTarget);
         }
 
         public void MoveTo(Vector2 position)
@@ -52,35 +51,18 @@ namespace Model.Enemies
 
         public void SwitchState<T>() where T : BaseEnemyState
         {
-            CurrentState.Stop();
-            CurrentState.TargetDied -= OnTargetDied;
-            CurrentState = _states.FirstOrDefault(state => state is T);
+            _currentState.Exit();
+            _currentState.TargetDied -= OnTargetDied;
 
-            if (CurrentState == null)
+            _currentState = _states.FirstOrDefault(state => state is T);
+
+            if (_currentState == null)
                 return;
 
-            CurrentState.TargetDied += OnTargetDied;
-            CurrentState.Start();
+            _currentState.TargetDied += OnTargetDied;
+            _currentState.Enter();
         }
 
-        private ITarget GetAliveTarget()
-        {
-            var aliveTargets = _targets.Where(target => target is Hero && target.IsAlive).ToArray();
-            return aliveTargets.Length != 0 ? aliveTargets[Random.Range(0, aliveTargets.Length)] : null;
-        }
-
-        public void Relieve()
-        {
-            CurrentState = _startEnemyState;
-            CurrentTarget = GetAliveTarget();
-            Health.Relieve();
-        }
-
-        private void OnTargetDied()
-        {
-            CurrentTarget = _targets.FirstOrDefault(target => target is Castle);
-        }
-        
         public void Attack()
         {
             Attacked?.Invoke();
@@ -89,6 +71,17 @@ namespace Model.Enemies
         public void ApplyDamage(float damage)
         {
             Health.ApplyDamage(damage);
+        }
+
+        private ITarget GetAliveTarget()
+        {
+            var aliveTargets = _targets.Where(target => target is Hero && target.IsAlive).ToArray();
+            return aliveTargets.Length != 0 ? aliveTargets[Random.Range(0, aliveTargets.Length)] : null;
+        }
+
+        private void OnTargetDied()
+        {
+            _currentTarget = _targets.FirstOrDefault(target => target is Castle);
         }
     }
 }

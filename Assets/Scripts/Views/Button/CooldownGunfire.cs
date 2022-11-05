@@ -1,4 +1,3 @@
-using System;
 using System.Collections;
 using UnityEngine;
 using UnityEngine.UI;
@@ -8,7 +7,7 @@ public class CooldownGunfire : MonoBehaviour
 {
     [SerializeField] private Image _reloadImage;
     [SerializeField] private ShootButton _shootButton;
-    
+
     private void OnEnable()
     {
         _shootButton.Add(OnShootButtonClick);
@@ -40,7 +39,6 @@ public class CooldownGunfire : MonoBehaviour
         }
 
         _reloadImage.fillAmount = 1;
-        
     }
 
     private IEnumerator WaitingToFill()

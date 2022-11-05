@@ -13,7 +13,7 @@ namespace Setup
             _root.Init();
             Model = _root.RageSpell;
             Presenter = new SpellPresenter(Model, View, _root.GetHeroes());
-            
+
             Presenter.Enable();
         }
 

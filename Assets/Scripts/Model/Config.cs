@@ -5,7 +5,7 @@ namespace Model
         public const float EnemySpeedOfMovement = 1.5f;
         public const float EnemyDamage = 0.01f;
         public const float EnemyHealth = 3f;
-        
+
         public const float MinDistanceWithTarget = 0.8f;
         public const float MaxDistanceWithTarget = 1.2f;
 
@@ -19,7 +19,7 @@ namespace Model
 
         public const float CountOfRestoreHealth = 50;
         public const float CountOfSpeedUp = 2;
-        
+
         public const string HealthMessageException = "Object must extend constructor with parameter";
     }
 }

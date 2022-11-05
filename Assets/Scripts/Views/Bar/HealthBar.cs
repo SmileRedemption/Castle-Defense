@@ -8,7 +8,7 @@ public class HealthBar : Bar
     [SerializeField] private Color _highColor;
 
     private const float StartValueOfSlider = 1;
-    
+
     public override void SetStartValueOfSlider()
     {
         Slider.value = StartValueOfSlider;
@@ -22,11 +22,11 @@ public class HealthBar : Bar
 
     public void OnDied()
     {
-        gameObject.SetActive(false);
+        enabled = false;
     }
 
     public void OnRelieved()
     {
-        gameObject.SetActive(true);
+        enabled = true;
     }
 }

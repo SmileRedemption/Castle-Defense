@@ -6,7 +6,6 @@ namespace Model.Enemies
     {
         public Golem(ITarget[] targets, Vector2 position) : base(targets, position)
         {
-            
         }
     }
 }
